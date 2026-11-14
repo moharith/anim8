@@ -39,6 +39,23 @@ Elke laag geeft een eigen beloning op een eigen tempo:
 - **Paragon**: oneindig, met 4 bomen (Kracht, Precisie, Vitaliteit, Snelheid). De XP per kill schaalt met `1.12^L`, de benodigde XP met `1.055^lvl`. Wie hogere niveaus pusht, gaat dus steeds sneller.
 - **Schrijnen**: Kracht (2× schade), Razernij (+50% snelheid) en Geleiding (een bliksemstorm).
 
+## Graphics: procedurele gear (v2)
+
+- De held wordt opgebouwd uit losse onderdelen. Elk slot voegt een laag toe die afhangt van de rang en het iLvl:
+  - Normaal: alleen kleding.
+  - Magisch: gewaad met kap.
+  - Zeldzaam: leer met kleine schouderstukken.
+  - Legendarisch: plaatpantser met cape, gloeiende randen, punten en hoorns.
+  - Set: een eigen kleur per set en een kroon van punten.
+  - Oud: extra punten.
+  - Oeroud: rood pantser met gloeiende ogen.
+- Hoe hoger het iLvl, hoe zwaarder en breder het pantser wordt (`bulk`).
+- Wapens: staf, toverstok, zwaard, bijl en scepter, met gloed per rang.
+- Een grondaura groeit met het aantal legendarische en oude items.
+- Een draaiende 3D-voorvertoning in het uitrustingsscherm.
+- Monsters zijn modellen die uit meerdere delen zijn samengevoegd (ghoul, imp, ogre), met een waggelende loopanimatie, schaduw en flits bij een treffer.
+- Projectielen gloeien, en er is een kort hit-stop-moment bij elites, legendarische drops en de bewaker.
+
 ## Balans in één formule
 
 - Monster-HP/schade: `MS(L) = 1.16^L`. Gear: `SC(iLvl) = 1.14^iLvl`, waarbij drops iLvl = L+2 (normaal) of L+3 (GR) krijgen.
