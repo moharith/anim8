@@ -99,6 +99,15 @@ Elke laag geeft een eigen beloning op een eigen tempo:
 - **Level-ups in de rift** geven tijdelijk +1 op je geleerde skills, of een passieve bonus.
 - **Doelen**: 12 categorieën met steeds hogere stappen, zoals niveau, Torment, GR, elites, bosses, legendarische items, goblins, versterken, edelstenen, itemkracht, Paragon en klassen. Elke stap claim je voor goud, scherven, sleutels en edelstenen.
 
+## v5: Druïde, metgezellen en zichtbare skillgroei
+
+- **Druïde**: een wolf die met je meegroeit.
+  - Op niveau 1 is het één grijze wolf. Vanaf niveau 4 zijn het er twee, met een donkere vacht en gloeiende ogen. Vanaf niveau 7 worden het zilveren geestwolven met een aura, en op niveau 8 komt er een derde bij, een alfawolf met een ring. Het formaat groeit +9% per niveau.
+  - Op niveau 30 komt er een Grizzly bij.
+  - De set Wilde Jacht en de legendarische kracht Roedelhart geven extra wolven en schade.
+- **Magiër · Energieschild** (niveau 15): een zichtbare bol die 12–50% schade opvangt. Hij wordt groter en kleurt van blauw naar violet. Vanaf niveau 4 draait er een tweede ring; vanaf niveau 5 schokt hij vijanden.
+- **Alle skills groeien zichtbaar per niveau**: grotere projectielen en bollen, dikkere bliksem, extra nova-ringen (niveau 5 en 8), grotere meteoren, meer deeltjes, sterkere aura's en slagen met vonken.
+
 ## Balans in één formule
 
 - Monster-HP/schade: `MS(L) = 1.16^L`. Gear: `SC(iLvl) = 1.14^iLvl`, waarbij drops iLvl = L+2 (normaal) of L+3 (GR) krijgen.
