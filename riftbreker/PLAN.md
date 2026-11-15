@@ -56,6 +56,34 @@ Elke laag geeft een eigen beloning op een eigen tempo:
 - Monsters zijn modellen die uit meerdere delen zijn samengevoegd (ghoul, imp, ogre), met een waggelende loopanimatie, schaduw en flits bij een treffer.
 - Projectielen gloeien, en er is een kort hit-stop-moment bij elites, legendarische drops en de bewaker.
 
+## v3: kerkers, elites, bosses en diepe gear
+
+- **Lineaire kerker per rift**: ongeveer 22 kamers met gangen die steeds verder het level in lopen, plus zijkamers met een schrijn of een schatgoblin. Er zijn muren, vuurkorven en kristallen, en een minimap die zich vult terwijl je verkent. Groepen monsters wachten tot je dichtbij komt; af en toe valt een horde aan.
+- **Elites**:
+  - Blauwe Kampioenen: een groep van 3–4.
+  - Gele Zeldzame elites: 1 leider met dienaren.
+  - Ze hebben een naam, een levensbalk en 1–4 affixen (meer op hogere Kwelling): Snel, Extra Gezond, Afschermend, Gesmolten, Bevroren, Mortier, Teleporteur, Vampirisch, Geëlektrificeerd, Arcaan en Pestilent.
+  - Gevaarlijke aanvallen worden vooraf aangekondigd met cirkels op de grond, zodat je ze kunt ontwijken.
+- **Schatgoblin**: rent weg en verdwijnt na 14 seconden. Versla je hem, dan krijg je een regen van goud, items en edelstenen.
+- **4 bosses**, elk met 3 aanvallen. Onder 50% leven worden ze razend en vallen ze sneller aan.
+  - Gromgor: een lijn van inslagen, een stormloop en een stamp.
+  - Vexara: een kogelspiraal, jonge spinnen en webben die je vertragen.
+  - Ignar: een meteorenregen, ringen van vuurballen en een vuuradem in een kegel.
+  - Morvath: teleporteren met een ijsring, draaiende ijsstralen en bevriezende inslagen.
+- **Kwelling 1–50**:
+  - Monsterniveau `(T−1)·3`.
+  - Beloning: XP ×(1+0,25·(T−1)), goud ×(1+0,2·(T−1)) en +10% kans op legendarische items per niveau.
+  - Een inschatting laat zien hoe zwaar het wordt (Makkelijk/Uitdagend/Zwaar/Dodelijk), met hoe snel je een monster doodt en hoeveel klappen je overleeft.
+  - Een Kwelling voltooien ontgrendelt de volgende.
+- **Gear-diepte**:
+  - Itemkracht per item en gemiddeld over je uitrusting.
+  - Rollbereik `[min–max]` per bonus, kwaliteit in procent en ✦ bij een perfecte roll.
+  - Elementschade (Vuur/Kou/Bliksem/Arcaan) en schade per skill, voor buildkeuzes.
+  - Schadereductie en leven per kill.
+  - **Versterken** van +1 tot +15: tot +5 lukt het altijd; vanaf +8 kun je bij falen een niveau terugvallen.
+  - **Sockets en edelstenen**: Robijn, Smaragd, Topaas en Amethist. Drie gelijke combineer je tot één van een hoger niveau. In een wapen geven ze een andere bonus dan in pantser.
+  - Een vergelijking per statistiek en een detailscherm met de hele schade-opbouw.
+
 ## Balans in één formule
 
 - Monster-HP/schade: `MS(L) = 1.16^L`. Gear: `SC(iLvl) = 1.14^iLvl`, waarbij drops iLvl = L+2 (normaal) of L+3 (GR) krijgen.
