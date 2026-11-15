@@ -84,6 +84,21 @@ Elke laag geeft een eigen beloning op een eigen tempo:
   - **Sockets en edelstenen**: Robijn, Smaragd, Topaas en Amethist. Drie gelijke combineer je tot één van een hoger niveau. In een wapen geven ze een andere bonus dan in pantser.
   - Een vergelijking per statistiek en een detailscherm met de hele schade-opbouw.
 
+## v4: klassen, heldenniveau en doelen
+
+- **4 eigen klassen**:
+  - Strijder (melee, extra leven en pantser).
+  - Jager (pijlen, sneller aanvallen en lopen).
+  - Magiër (elementen, groter effectgebied).
+  - Zieneres (heilig licht dat schade doet en geneest).
+- Elke klasse heeft een eigen niveau, skilltree en uitrusting. Tas, goud, edelstenen en Paragon zijn gedeeld.
+- **Heldenniveau 1–60**: per niveau 1 skillpunt, +3% schade en +8 leven. Na niveau 60 gaat XP naar Paragon (oneindig).
+- **Skilltree**: 6 skills per klasse. Ze komen vrij op niveau 1, 5, 10, 20, 30 en 45, en elke skill kun je tot niveau 10 opwaarderen. Herverdelen kost goud.
+  - Elke skill hoort bij een type (Projectiel, Baan, Ketting, Nova, Inslag, Aura of Slag) en heeft een element.
+  - Legendarische krachten, sets en bonussen werken per type, zodat ze bij elke klasse passen.
+- **Level-ups in de rift** geven tijdelijk +1 op je geleerde skills, of een passieve bonus.
+- **Doelen**: 12 categorieën met steeds hogere stappen, zoals niveau, Torment, GR, elites, bosses, legendarische items, goblins, versterken, edelstenen, itemkracht, Paragon en klassen. Elke stap claim je voor goud, scherven, sleutels en edelstenen.
+
 ## Balans in één formule
 
 - Monster-HP/schade: `MS(L) = 1.16^L`. Gear: `SC(iLvl) = 1.14^iLvl`, waarbij drops iLvl = L+2 (normaal) of L+3 (GR) krijgen.
