@@ -454,7 +454,7 @@ function startRun(gr){
  recalc();G.hp=G.c.maxhp;P.x=P.z=0;P.slowT=0;clearWorld();
  genLevel(false);populate();buildLevel(th);
  portal.visible=false;boss.visible=false;showUI('hud');$('#bossb').classList.add('hide');$('#exitb').classList.add('hide');mmPos();
- banner((gr?'Grootse Rift '+G.L:'Rift · Kwelling '+S.tor)+'<br><small>'+th.n+'</small>');skillBar()}
+ banner((gr?'Grootse Rift '+G.L:'Rift · Torment '+S.tor)+'<br><small>'+th.n+'</small>');skillBar()}
 function recalc(){const s=G.st,p=k=>G.pas[k]||0,c={};
  c.wd=s.wd;c.dmgM=(1+s.dmg/100)*(1+.2*p('pow'));c.cc=Math.min(s.cc+5*p('crit'),90)/100;c.cd=(s.cd+25*p('crit'))/100*(s.legs.crit?2:1);
  c.as=1+s.as/100+.12*p('haste');c.area=1+s.area/100+.15*p('area');c.cdr=1-Math.min(.6,s.cdr/100);c.ms=5*(1+s.ms/100+.1*p('swift'));
@@ -693,7 +693,7 @@ function endRun(win){if(!G||G.over)return;G.over=true;G.paused=true;S.st.runs++;
   else{S.keys+=G.key;extra=`<div>🗝️ +${G.key} Grootse Rift-sleutel</div>`}}
  save();
  const t=Math.floor(G.t);sheet(`<div class="itn" style="text-align:center;font-size:24px;color:${win?'#ff9a3a':'#f55'}">${win?'Rift voltooid':'Je bent gevallen…'}</div>
- <div class="card stats"><span>Tijd<b>${Math.floor(t/60)}:${String(t%60).padStart(2,'0')}</b></span><span>Kills<b>${G.kills}</b></span><span>Items<b>${G.loot}</b></span><span>Legendarisch<b style="color:#ff8a1c">${G.legs}</b></span><span>Goud<b>${fmt(gold)}</b></span><span>Paragon XP<b>${fmt(pxp)}</b></span><span>Edelstenen<b style="color:#c06aff">${G.gems}</b></span><span>Kwelling<b>${G.gr?'GR '+G.L:S.tor}</b></span></div>
+ <div class="card stats"><span>Tijd<b>${Math.floor(t/60)}:${String(t%60).padStart(2,'0')}</b></span><span>Kills<b>${G.kills}</b></span><span>Items<b>${G.loot}</b></span><span>Legendarisch<b style="color:#ff8a1c">${G.legs}</b></span><span>Goud<b>${fmt(gold)}</b></span><span>Paragon XP<b>${fmt(pxp)}</b></span><span>Edelstenen<b style="color:#c06aff">${G.gems}</b></span><span>Torment<b>${G.gr?'GR '+G.L:S.tor}</b></span></div>
  ${lv?`<div class="big-n">✴ PARAGON ${S.pl} ✴<br><small style="font-size:14px">+${lv} niveau${lv>1?'s':''} · punten te besteden!</small></div>`:''}${extra}
  <div class="brow"><button class="btn big" data-act="town">Terug naar de stad</button></div>`,true);if(lv)sfx('lvl')}
 const pNeed=l=>Math.round(120*Math.pow(1.055,l)+l*40);
@@ -713,10 +713,10 @@ function renderMenu(){const st=calcStats(S.eq);
  document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab));let h='';
  if(tab==='rift'){const tl=torL(S.tor),rw=runRew(false,tl,S.tor),gw=runRew(true,S.grSel,0);
  h=`<div class="card"><div class="stats"><span>Itemkracht<b>${st.ip}</b></span><span>Schade/sec<b>${fmt(st.dps)}</b></span><span>Taaiheid<b>${fmt(st.tough)}</b></span><span>Hoogste GR<b>${S.grMax}</b></span></div></div>
- <div class="card"><h2>🌀 Nephalem Rift</h2><div class="row"><div><div>Kwelling ${S.tor}</div><div class="dim">Monsterniveau ${tl} · leven &amp; schade ×${fmt(MS(tl))}</div></div>
- <div class="stepper"><button class="btn sm" data-act="tor-">−</button><b>${S.tor}</b><button class="btn sm" data-act="tor+">+</button></div></div>
+ <div class="card"><h2>🌀 Nephalem Rift</h2><div class="row"><div><div>Torment ${S.tor}</div><div class="dim">Monsterniveau ${tl} · leven &amp; schade ×${fmt(MS(tl))}</div></div>
+ <div class="stepper"><button class="btn sm" data-act="tor-">−</button><b>T${S.tor}</b><button class="btn sm" data-act="tor+">${S.tor>=torMax()?'🔒':'+'}</button></div></div>
  ${estimate(st,tl,false)}<div class="rew">Beloning: XP ×${rw.xp.toFixed(2)} · Goud ×${rw.gold.toFixed(2)} · Legendarisch +${Math.round(rw.leg*100)}% · iLvl ${tl+2} · 🗝️</div>
- <div class="dim" style="margin:6px 0">Max Kwelling ${torMax()} · voltooi een Kwelling om de volgende te ontgrendelen.</div><button class="btn big" data-act="run">Open Rift</button></div>
+ <div class="dim" style="margin:6px 0">Ontgrendeld t/m <b>T${torMax()}</b> van 50 · versla de bewaker op je hoogste Torment om de volgende vrij te spelen.</div><button class="btn big" data-act="run">Open Rift</button></div>
  <div class="card"><h2>🔥 Grootse Rift</h2><div class="row"><div><div>Niveau ${S.grSel}</div><div class="dim">5:00 timer · snel klaar = tot +3 niveaus</div></div>
  <div class="stepper"><button class="btn sm" data-act="gr-">−</button><b>${S.grSel}</b><button class="btn sm" data-act="gr+">+</button></div></div>
  ${estimate(st,S.grSel,true)}<div class="rew">Beloning: XP ×${gw.xp.toFixed(2)} · Goud ×${gw.gold.toFixed(2)} · Legendarisch +${Math.round(gw.leg*100)}% · iLvl ${S.grSel+3} · ${Math.min(7,2+Math.floor(S.grSel/12))}+ legendarisch van de bewaker</div>
@@ -728,14 +728,14 @@ function renderMenu(){const st=calcStats(S.eq);
  else if(tab==='para'){const n=pNeed(S.pl);h=`<div class="big-n">✴ ${S.pl}</div><div class="bar" style="height:12px"><i style="width:${S.pxp/n*100}%;background:linear-gradient(90deg,#5a1aa0,#d08aff)"></i><b>${fmt(S.pxp)} / ${fmt(n)}</b></div>
  <div class="card"><div class="row"><div>Punten te besteden: <b style="color:#d08aff;font-size:20px">${S.pts}</b></div><button class="btn sm prp" data-act="pauto" ${S.pts?'':'disabled'}>Auto</button></div>
  ${Object.keys(PARA).map(k=>`<div class="par"><div><b>${PARA[k].n}</b> <span style="color:#d08aff">${S.pa[k]}</span><div class="dim">${PARA[k].d}</div></div><button class="btn sm" data-act="p1" data-k="${k}" ${S.pts?'':'disabled'}>+1</button><button class="btn sm" data-act="p10" data-k="${k}" ${S.pts?'':'disabled'}>+10</button></div>`).join('')}</div>
- <div class="dim" style="text-align:center">Paragon is oneindig. Hogere Kwellingen en Grootse Rifts geven veel meer XP.</div>`}
+ <div class="dim" style="text-align:center">Paragon is oneindig. Hogere Torment-niveaus en Grootse Rifts geven veel meer XP.</div>`}
  else{h=`<div class="card"><h2>⚒ Ontmantelen</h2><div class="dim">Levert 💎 scherven op voor betoveren en versterken.</div><div class="brow">
  <button class="btn sm" data-act="salv" data-r="1">Normaal</button><button class="btn sm" data-act="salv" data-r="2">≤ Magisch</button><button class="btn sm" data-act="salv" data-r="3">≤ Zeldzaam</button><button class="btn sm" data-act="salv" data-r="9">Niet-Oude legendarische</button></div></div>
  <div class="card"><h2>Auto-ontmantelen bij oppakken</h2><div class="brow">${['Uit','Normaal','≤ Magisch','≤ Zeldzaam'].map((t,i)=>`<button class="btn sm ${S.auto===i?'prp':''}" data-act="auto" data-r="${i}">${t}</button>`).join('')}</div></div>
  <div class="card"><h2>◆ Juwelier</h2><div class="dim">Edelstenen vallen van elites, goblins en bewakers. Combineer 3 gelijke tot 1 van een hoger niveau. Zet ze in sockets via het itemscherm.</div>
  ${Object.keys(GEMS).map(t=>{const g=S.gems[t]||{},ls=Object.keys(g).map(Number).sort((a,b)=>b-a),G_=GEMS[t];return`<div class="gemrow"><b style="color:${G_.c}">◆ ${G_.n}</b><span class="dim">Wapen: +${G_.w[1]}${G_.w[2]} per niveau · Pantser: +${G_.a[1]}${G_.a[2]} per niveau</span><div class="brow" style="margin-top:4px">${ls.length?ls.map(l=>`<button class="btn sm" data-act="comb" data-t="${t}" data-l="${l}" ${g[l]>=3&&S.gold>=combCost(l)?'':'disabled'}>Niv. ${l} ×${g[l]}${g[l]>=3?' → combineer 💰'+fmt(combCost(l)):''}</button>`).join(''):'<span class="dim">nog geen</span>'}</div></div>`}).join('')}</div>
  <div class="card"><h2>✨ Betoveren &amp; versterken</h2><div class="dim">Tik op een item. <b>Betoveren</b> rolt alle waarden opnieuw. <b>Versterken</b> tilt een item naar +1…+15 (elke + geeft +6% basis en +3% op bonussen). Tot +5 lukt het altijd; daarna daalt de kans, en vanaf +8 kun je bij falen een niveau terugvallen.</div></div>
- <div class="card"><h2>Statistieken</h2><div class="stats"><span>Rifts<b>${S.st.runs}</b></span><span>Kills<b>${fmt(S.st.kills)}</b></span><span>Legendarisch<b>${S.st.legs}</b></span><span>Hoogste Kwelling<b>${S.torClr||0}</b></span></div><div class="brow"><button class="btn sm" data-act="reset">Alles wissen</button></div></div>`}
+ <div class="card"><h2>Statistieken</h2><div class="stats"><span>Rifts<b>${S.st.runs}</b></span><span>Kills<b>${fmt(S.st.kills)}</b></span><span>Legendarisch<b>${S.st.legs}</b></span><span>Hoogste Torment<b>${S.torClr||0}</b></span></div><div class="brow"><button class="btn sm" data-act="reset">Alles wissen</button></div></div>`}
  $('#mbody').innerHTML=h;if(tab==='gear')$('#hvw').appendChild(pvC)}
 const keyCost=()=>Math.round(400*Math.pow(1.1,S.grMax));
 const combCost=l=>Math.round(50*Math.pow(1.6,l));
@@ -784,7 +784,7 @@ document.addEventListener('click',ev=>{const b=ev.target.closest('[data-act],[da
  if(b.dataset.tab){tab=b.dataset.tab;renderMenu();$('#mbody').scrollTop=0;return}
  const a=b.dataset.act,id=b.dataset.id;
  switch(a){case'run':startRun(false);break;case'grun':startRun(true);break;
-  case'tor-':S.tor=Math.max(1,S.tor-1);break;case'tor+':S.tor=Math.min(torMax(),S.tor+1);break;
+  case'tor-':S.tor=Math.max(1,S.tor-1);break;case'tor+':if(S.tor>=torMax()){toast('🔒 Torment '+(S.tor+1)+' zit op slot: versla eerst de bewaker op Torment '+S.tor,'#ffd84a');return}S.tor++;break;
   case'gr-':S.grSel=Math.max(1,S.grSel-1);break;case'gr+':S.grSel=Math.min(S.grUnl,S.grSel+1);break;
   case'buykey':if(S.gold>=keyCost()){S.gold-=keyCost();S.keys++;sfx('coin')}break;
   case'item':itemSheet(findIt(id),b.dataset.w);return;
@@ -849,7 +849,7 @@ function visuals(dt){
  // HUD
  const c=G.c;$('#rprog i').style.width=Math.min(100,G.prog)+'%';$('#rprog b').textContent=G.won?'Voltooid':G.bossOn?'Bewaker!':Math.floor(Math.min(100,G.prog))+'%';
  $('#xpb i').style.width=(G.xp/G.need*100)+'%';
- const t=G.gr?Math.max(0,G.lim-G.t):G.t;$('#tl').textContent=(G.gr?'GR '+G.L:'Kwelling '+S.tor);$('#tm').textContent=(G.gr?'⏳ ':'')+Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0');$('#tm').style.color=G.gr&&t<60?'#f55':'';
+ const t=G.gr?Math.max(0,G.lim-G.t):G.t;$('#tl').textContent=(G.gr?'GR '+G.L:'Torment '+S.tor);$('#tm').textContent=(G.gr?'⏳ ':'')+Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0');$('#tm').style.color=G.gr&&t<60?'#f55':'';
  $('#tr').textContent='⭐'+G.lvl+'  💰'+fmt(G.gold)+(G.legs?'  ★'+G.legs:'');
  $('#orb i').style.height=Math.max(0,G.hp/c.maxhp*100)+'%';$('#orb b').textContent=fmt(Math.max(0,G.hp));
  if(G.boss&&!G.won)$('#bossb i').style.width=Math.max(0,G.boss.hp/G.boss.max*100)+'%';
