@@ -151,11 +151,11 @@ const torL=t=>(t-1)*3;
 
 // ================= save =================
 const DEF=()=>({gold:0,shards:0,keys:0,grMax:0,grUnl:1,grSel:1,tor:1,pl:0,pxp:0,pts:0,pa:{dmg:0,crit:0,life:0,spd:0},inv:[],eq:{},auto:0,uid:1,gems:{},torClr:0,st:{runs:0,legs:0,kills:0}});
-let S;try{S=Object.assign(DEF(),JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){S=DEF()}
+let S;try{const raw=JSON.parse(localStorage.getItem(KEY)||'{}');S=Object.assign(DEF(),raw);if(raw.torClr===undefined&&S.st.runs>0)S.torClr=S.tor}catch(e){S=DEF()}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
 if(!S.eq.weapon)S.eq.weapon={id:S.uid++,slot:'weapon',rar:0,ilvl:0,anc:0,aff:[],dmg:9,name:'Versleten Staf',wb:0};if(S.eq.weapon.name==='Versleten Staf')S.eq.weapon.wb=0;
 S.gems=S.gems||{};
-const torMax=()=>Math.min(50,Math.max((S.torClr||0)+1,1+Math.floor(S.grMax/3)));
+const torMax=()=>{const st=calcStats(S.eq);let g=1;for(let t=2;t<=50;t++){if(estV(st,torL(t),false).lv<=2)g=t;else break}return Math.min(50,Math.max((S.torClr||0)+1,1+Math.floor(S.grMax/3),g))};
 const refL=()=>Math.max(S.grMax,torL(S.tor));
 
 // ================= items =================
@@ -705,8 +705,10 @@ function toast(t,c){const el=document.createElement('div');el.className='toast';
 function banner(h){const b=$('#banner');b.innerHTML=h;b.classList.remove('on');void b.offsetWidth;b.classList.add('on')}
 let tab='rift',sel=null;
 function sheet(h,lock){const s=$('#sheet');s.querySelector('.in').innerHTML=h;s.classList.remove('hide');s.dataset.lock=lock?1:''}
-function estimate(st,L,gr){const m=MS(L)*(gr?1.15:1),hp=8*m,dm=5*m,ar=st.armor/(st.armor+30*MS(L)),red=1-(1-ar)*(1-Math.min(60,st.dr)/100),kt=hp/Math.max(1e-9,st.dps*1.8),hits=st.hp/(dm*(1-red));
- const lv=kt<.4&&hits>8?['Makkelijk','#5f5']:kt<1.2&&hits>4?['Uitdagend','#ffd84a']:kt<3.5&&hits>2?['Zwaar','#ff8a1c']:['Dodelijk','#f44'];
+function estV(st,L,gr){const m=MS(L)*(gr?1.15:1),hp=8*m,dm=5*m,ar=st.armor/(st.armor+30*MS(L)),red=1-(1-ar)*(1-Math.min(60,st.dr)/100),kt=hp/Math.max(1e-9,st.dps*1.8),hits=st.hp/(dm*(1-red));
+ return{kt,hits,lv:kt<.4&&hits>8?0:kt<1.2&&hits>4?1:kt<3.5&&hits>2?2:3}}
+const LVN=[['Makkelijk','#5f5'],['Uitdagend','#ffd84a'],['Zwaar','#ff8a1c'],['Dodelijk','#f44']];
+function estimate(st,L,gr){const{kt,hits,lv:i}=estV(st,L,gr),lv=LVN[i];
  return`<div class="est"><b style="color:${lv[1]}">● ${lv[0]}</b> <span class="dim">monster sterft in ${kt<10?kt.toFixed(2):fmt(kt)}s · jij overleeft ${hits<100?hits.toFixed(1):fmt(hits)} klappen</span></div>`}
 function renderMenu(){const st=calcStats(S.eq);
  $('#res').innerHTML=`<span>💰 <b>${fmt(S.gold)}</b></span><span>💎 <b>${fmt(S.shards)}</b></span><span>🗝️ <b>${S.keys}</b></span><span>✴️ <b>${S.pl}</b></span>`;
@@ -716,7 +718,7 @@ function renderMenu(){const st=calcStats(S.eq);
  <div class="card"><h2>🌀 Nephalem Rift</h2><div class="row"><div><div>Torment ${S.tor}</div><div class="dim">Monsterniveau ${tl} · leven &amp; schade ×${fmt(MS(tl))}</div></div>
  <div class="stepper"><button class="btn sm" data-act="tor-">−</button><b>T${S.tor}</b><button class="btn sm" data-act="tor+">${S.tor>=torMax()?'🔒':'+'}</button></div></div>
  ${estimate(st,tl,false)}<div class="rew">Beloning: XP ×${rw.xp.toFixed(2)} · Goud ×${rw.gold.toFixed(2)} · Legendarisch +${Math.round(rw.leg*100)}% · iLvl ${tl+2} · 🗝️</div>
- <div class="dim" style="margin:6px 0">Ontgrendeld t/m <b>T${torMax()}</b> van 50 · versla de bewaker op je hoogste Torment om de volgende vrij te spelen.</div><button class="btn big" data-act="run">Open Rift</button></div>
+ <div class="dim" style="margin:6px 0">Kiesbaar t/m <b>T${torMax()}</b> van 50 · alles tot <i>Zwaar</i> voor jouw gear staat open; versla de bewaker op je hoogste Torment om verder te komen.</div><button class="btn big" data-act="run">Open Rift</button></div>
  <div class="card"><h2>🔥 Grootse Rift</h2><div class="row"><div><div>Niveau ${S.grSel}</div><div class="dim">5:00 timer · snel klaar = tot +3 niveaus</div></div>
  <div class="stepper"><button class="btn sm" data-act="gr-">−</button><b>${S.grSel}</b><button class="btn sm" data-act="gr+">+</button></div></div>
  ${estimate(st,S.grSel,true)}<div class="rew">Beloning: XP ×${gw.xp.toFixed(2)} · Goud ×${gw.gold.toFixed(2)} · Legendarisch +${Math.round(gw.leg*100)}% · iLvl ${S.grSel+3} · ${Math.min(7,2+Math.floor(S.grSel/12))}+ legendarisch van de bewaker</div>
@@ -784,7 +786,7 @@ document.addEventListener('click',ev=>{const b=ev.target.closest('[data-act],[da
  if(b.dataset.tab){tab=b.dataset.tab;renderMenu();$('#mbody').scrollTop=0;return}
  const a=b.dataset.act,id=b.dataset.id;
  switch(a){case'run':startRun(false);break;case'grun':startRun(true);break;
-  case'tor-':S.tor=Math.max(1,S.tor-1);break;case'tor+':if(S.tor>=torMax()){toast('🔒 Torment '+(S.tor+1)+' zit op slot: versla eerst de bewaker op Torment '+S.tor,'#ffd84a');return}S.tor++;break;
+  case'tor-':S.tor=Math.max(1,S.tor-1);break;case'tor+':if(S.tor>=torMax()){toast('🔒 Torment '+(S.tor+1)+' zit op slot: versla de bewaker op Torment '+S.tor+' of word sterker','#ffd84a');return}S.tor++;break;
   case'gr-':S.grSel=Math.max(1,S.grSel-1);break;case'gr+':S.grSel=Math.min(S.grUnl,S.grSel+1);break;
   case'buykey':if(S.gold>=keyCost()){S.gold-=keyCost();S.keys++;sfx('coin')}break;
   case'item':itemSheet(findIt(id),b.dataset.w);return;
